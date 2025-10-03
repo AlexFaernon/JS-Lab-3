@@ -12,8 +12,13 @@ function bubbleSort(array, reversed) {
     }
 }
 
-function binarySearch(array, item, start = 0, end = array.length) {
+function binarySearch(array, item, start = 0, end = array.length - 1) {
+    if (start > end) {
+        return -1
+    }
+
     const middle = Math.floor((start + end) / 2)
+
     if (typeof array[middle] != "number") {
         throw new TypeError("Array should contain only numbers")
     }
@@ -21,12 +26,10 @@ function binarySearch(array, item, start = 0, end = array.length) {
         return middle
     }
     if (array[middle] < item) {
-        return binarySearch(array, item, middle, end)
+        return binarySearch(array, item, middle + 1, end)
+    } else {
+        return binarySearch(array, item, start, middle - 1)
     }
-    else {
-        return binarySearch(array, item, start, middle)
-    }
-
 }
 
 function bracketCheck(str) {
@@ -53,7 +56,7 @@ bubbleSort(array, false)
 console.log(array)
 
 array = [1, 2, 4, 8]
-console.log(binarySearch(array, 1))
+console.log(binarySearch(array, 3))
 
 const niceStr = "({aa}aa)[]"
 const badStr = "()aa{]}["
